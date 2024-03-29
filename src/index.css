@@ -9,3 +9,36 @@
   text-align: center;
   box-sizing: border-box;
 }
+
+@font-face {
+  font-family: "font-principal-bold";
+  src: url("../fonts/sf-ui-display-bold.otf");
+}
+@font-face {
+  font-family: "font-principal-black";
+  src: url("../fonts/sf-ui-display-black.otf");
+}
+@font-face {
+  font-family: "font-principal-heavy";
+  src: url("../fonts/sf-ui-display-heavy.otf");
+}
+@font-face {
+  font-family: "font-principal-light";
+  src: url("../fonts/sf-ui-display-light.otf");
+}
+@font-face {
+  font-family: "font-principal-medium";
+  src: url("../fonts/sf-ui-display-medium.otf");
+}
+@font-face {
+  font-family: "font-principal-semibold";
+  src: url("../fonts/sf-ui-display-semibold.otf");
+}
+@font-face {
+  font-family: "font-principal-thin";
+  src: url("../fonts/sf-ui-display-thin.otf");
+}
+@font-face {
+  font-family: "font-principal-ultralight";
+  src: url("../fonts/sf-ui-display-ultralight.otf");
+}
