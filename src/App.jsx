@@ -1,8 +1,12 @@
+import { Routes, Route } from "react-router-dom";
+
 function App() {
   return (
-    <>
-      <h1>Rentimia</h1>
-    </>
+    <Routes>
+      <Route path="/" />
+      <Route path="/about" />
+      <Route path="/dashboard" />
+    </Routes>
   );
 }
 
