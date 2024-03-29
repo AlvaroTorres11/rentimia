@@ -4,7 +4,10 @@ export function InputField({ label, ...props }) {
   const [field, meta] = useField(props);
   return (
     <div className="flex flex-col text-start">
-      <label className="text-sm" htmlFor={props.id || props.name}>
+      <label
+        className="text-sm font-principal-medium quaternaryColor"
+        htmlFor={props.id || props.name}
+      >
         {label}
       </label>
       <input
@@ -15,7 +18,9 @@ export function InputField({ label, ...props }) {
         {...props}
       />
       {meta.touched && meta.error ? (
-        <div className="text-red-500 text-sm">{meta.error}</div>
+        <span className="text-red-500 text-xs font-principal-light">
+          {meta.error}
+        </span>
       ) : null}
     </div>
   );
