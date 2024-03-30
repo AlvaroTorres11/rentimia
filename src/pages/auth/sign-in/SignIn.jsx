@@ -2,16 +2,17 @@ import GOOGLE_ICON from "../../../assets/icons/google.png";
 import { InputField } from "../../../common/FormComponents";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
+import { Link } from "react-router-dom";
 import HERO from "../../../assets/auth/Signin.jpg";
 
 function SignIn() {
   return (
-    <section className="h-screen flex">
-      <article className="w-full p-24 relative grid place-content-center lg:w-3/6 md:p-5 lg:p-10 xl:p-16">
-        <h2 className="absolute top-10 left-10 text-2xl font-principal-semibold primary-text-color">
+    <section className="min-h-screen flex">
+      <article className="w-full p-18 relative grid place-content-center lg:w-3/6 md:p-5 lg:p-10 xl:p-16">
+        <h2 className="absolute top-8 md:top-2 lg:top-8 left-10 text-2xl font-principal-semibold primary-text-color">
           Rentimia
         </h2>
-        <div className="flex flex-col gap-8">
+        <div className="flex flex-col gap-8 max-w-[400px] p-8">
           <div className="text-start flex flex-col">
             <h2 className="text-3xl font-principal-semibold primary-text-color">
               Bienvenido de nuevo
@@ -68,11 +69,36 @@ function SignIn() {
                 placeholder="**********"
               />
 
-              <button className="btn primary-color-300" type="submit">
-                <span className="font-principal-semibold secondary-text-color">
-                  Iniciar sesión
-                </span>
-              </button>
+              <div className="flex flex-col gap-5">
+                <button className="btn primary-color-300 w-full" type="submit">
+                  <span className="font-principal-semibold secondary-text-color">
+                    Iniciar sesión
+                  </span>
+                </button>
+
+                <p className="font-principal-light">
+                  ¿Aún no tienes una cuenta?{" "}
+                  <Link>
+                    <u>
+                      <span className="font-principal-semibold">
+                        Crea una aquí
+                      </span>
+                    </u>
+                  </Link>
+                </p>
+              </div>
+
+              <div className="mt-10">
+                <p className="font-principal-light text-sm">
+                  Al crear la cuenta o iniciar sesión aceptas los{" "}
+                  <Link>
+                    <u className="font-principal-medium">
+                      términos y condiciones
+                    </u>
+                  </Link>{" "}
+                  de Rentimia y nuestra política de privacidad.
+                </p>
+              </div>
             </Form>
           </Formik>
         </div>
