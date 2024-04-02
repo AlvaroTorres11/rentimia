@@ -5,6 +5,7 @@ import * as Yup from "yup";
 import { Link } from "react-router-dom";
 import HERO from "../../../assets/auth/Signin.jpg";
 import { useState } from "react";
+import { useThemeToogle } from "../../../hooks/useThemeToogle";
 
 export function SignUpStart({ onNext }) {
   return (
@@ -33,7 +34,7 @@ export function SignUpStart({ onNext }) {
         })}
         onSubmit={(values, { setSubmitting }) => {
           setTimeout(() => {
-            onNext(2);
+            onNext(1);
             setSubmitting(false);
           }, 400);
         }}
@@ -77,29 +78,37 @@ export function SignUpStart({ onNext }) {
   );
 }
 
-export function SignUpPersonalInformation() {
+export function SignUpPersonalInformation({ onNext }) {
+  const maxDate = new Date();
+  maxDate.setFullYear(maxDate.getFullYear() - 18);
+
+  const minDate = new Date();
+  minDate.setFullYear(minDate.getFullYear() - 90);
   return (
     <>
       <Formik
         initialValues={{
-          cp: "",
-          estado: "",
-          municipio: "",
-          colonia: "",
-          calle: "",
-          numExt: "",
-          numInt: "",
+          nombre: "",
+          apellidoPaterno: "",
+          apellidoMaterno: "",
+          fechaNac: "",
         }}
         validationSchema={Yup.object({
-          cp: Yup.string()
-            .min(5, "El Código Postal debe tener al menos 5 caracteres")
-            .max(5, "El Código Postal no puede tener más de 5 caracteres")
-            .required("Debes ingresar un Código Postal"),
-          calle: Yup.string().required("Debes ingresar una contraseña"),
-
-          numExt: Yup.number()
-            .min(1, "El número exterior debe ser mayor a 0")
-            .required("Debes ingresar un número exterior"),
+          nombre: Yup.string()
+            .required("Ingresa tu nombre")
+            .min(1, "El nombre debe contener al menos una letra")
+            .max(37, "El nombre no debe contener más de 37 letras"),
+          apellidoPaterno: Yup.string()
+            .required("Ingresa tu apellido paterno")
+            .min(1, "El apellido debe contener al menos una letra")
+            .max(50, "El apellido no debe contener más de 50 letras"),
+          apellidoMaterno: Yup.string()
+            .min(1, "El apellido debe contener al menos una letra")
+            .max(50, "El apellido no debe contener más de 50 letras"),
+          fechaNac: Yup.date()
+            .required("Ingresa tu fecha de nacimiento")
+            .min(minDate, "Fecha de nacimiento no válida")
+            .max(maxDate, "Fecha de nacimiento no válida"),
         })}
         onSubmit={(values, { setSubmitting }) => {
           setTimeout(() => {
@@ -110,82 +119,147 @@ export function SignUpPersonalInformation() {
       >
         <Form className="flex flex-col gap-3">
           <InputField
-            label="Código postal"
-            name="cp"
+            label="Nombre(s)"
+            name="nombre"
             type="text"
-            placeholder="62531"
+            placeholder="Rigoberto"
           />
 
           <InputField
-            label="Estado"
-            name="estado"
+            label="Apellido Paterno"
+            name="apellidoPaterno"
             type="text"
-            placeholder=""
-            readOnly
-            disabled
+            placeholder="Espíndola"
           />
           <InputField
-            label="Municipio / Alcaldía"
-            name="municipio"
+            label="Apellido Materno"
+            name="apellidoMaterno"
             type="text"
-            placeholder=""
-            readOnly
-            disabled
+            placeholder="Medina"
           />
           <InputField
-            label="Colonia"
-            name="colonia"
-            type="text"
-            placeholder=""
-            readOnly
-            disabled
+            label="Fecha de nacimiento"
+            name="fechaNac"
+            type="date"
+            placeholder="dd/mm/aaaa"
           />
 
-          <InputField
-            label="Calle"
-            name="calle"
-            type="text"
-            placeholder="Calle 25 de abril"
-          />
-
-          <div className="flex gap-5">
-            <InputField
-              label="Núm. Exterior"
-              name="numExt"
-              type="text"
-              placeholder="1"
-            />
-            <InputField
-              label="Num. Interior (opcional)"
-              name="numInt"
-              type="text"
-              placeholder="S/N"
-            />
-          </div>
-
-          <div className="flex flex-col gap-5">
-            <button className="btn primary-color-300 w-full" type="submit">
-              <span className="font-principal-semibold secondary-text-color">
-                Continuar
-              </span>
-            </button>
-          </div>
+          <button className="btn primary-color-300 w-full" type="submit">
+            <span className="font-principal-semibold secondary-text-color">
+              Continuar
+            </span>
+          </button>
         </Form>
       </Formik>
     </>
   );
 }
 
-export default function SignUp() {
-  const [darkTheme, setDarkTheme] = useState(true);
-  const handleChangeTheme = () => {
-    setDarkTheme(!darkTheme);
-    console.log(darkTheme);
-    const theme = darkTheme ? "winter" : "sunset";
-    document.documentElement.setAttribute("data-theme", theme);
-  };
+export function SignUpLocation() {
+  return (
+    <Formik
+      initialValues={{
+        cp: "",
+        estado: "",
+        municipio: "",
+        colonia: "",
+        calle: "",
+        numExt: "",
+        numInt: "",
+      }}
+      validationSchema={Yup.object({
+        cp: Yup.string()
+          .min(5, "El Código Postal debe tener al menos 5 caracteres")
+          .max(5, "El Código Postal no puede tener más de 5 caracteres")
+          .required("Debes ingresar un Código Postal"),
+        calle: Yup.string().required("Debes ingresar una contraseña"),
+        numExt: Yup.number()
+          .min(1, "El número exterior debe ser mayor a 0")
+          .required("Debes ingresar un número exterior"),
+      })}
+      onSubmit={(values, { setSubmitting }) => {
+        setTimeout(() => {
+          onNext(2);
+          setSubmitting(false);
+        }, 400);
+      }}
+    >
+      <Form className="flex flex-col gap-3">
+        <InputField
+          label="Código postal"
+          name="cp"
+          type="text"
+          placeholder="62531"
+        />
 
-  const [signUpSection, setSignUpSection] = useState(1);
+        <InputField
+          label="Estado"
+          name="estado"
+          type="text"
+          placeholder=""
+          readOnly
+          disabled
+        />
+        <InputField
+          label="Municipio / Alcaldía"
+          name="municipio"
+          type="text"
+          placeholder=""
+          readOnly
+          disabled
+        />
+        <InputField
+          label="Colonia"
+          name="colonia"
+          type="text"
+          placeholder=""
+          readOnly
+          disabled
+        />
+
+        <InputField
+          label="Calle"
+          name="calle"
+          type="text"
+          placeholder="Calle 25 de abril"
+        />
+
+        <div className="flex gap-5">
+          <InputField
+            label="Núm. Exterior"
+            name="numExt"
+            type="text"
+            placeholder="1"
+          />
+          <InputField
+            label="Num. Interior (opcional)"
+            name="numInt"
+            type="text"
+            placeholder="S/N"
+          />
+        </div>
+
+        <div className="flex flex-col gap-5">
+          <button className="btn primary-color-300 w-full" type="submit">
+            <span className="font-principal-semibold secondary-text-color">
+              Continuar
+            </span>
+          </button>
+        </div>
+      </Form>
+    </Formik>
+  );
+}
+
+export default function SignUp() {
+  const { handleChangeTheme } = useThemeToogle();
+  const signUpSectionTitles = [
+    "Empecemos",
+    "Información personal",
+    "Ubicación",
+  ];
+
+  const [signUpSection, setSignUpSection] = useState(0);
   const handleNextSection = (nextSection) => {
     setSignUpSection(nextSection);
   };
@@ -224,15 +298,15 @@ export default function SignUp() {
         <div className="flex flex-col gap-8 min-w-[400px] p-8">
           <div className="text-start flex flex-col">
             <h2 className="text-3xl font-principal-semibold primary-text-color">
-              Empecemos
+              {signUpSectionTitles[signUpSection]}
             </h2>
             <span className="font-principal-medium secondary-text-color">
               Creación de nueva cuenta
             </span>
           </div>
 
-          {signUpSection === 1 && <SignUpStart onNext={handleNextSection} />}
-          {signUpSection === 2 && <SignUpPersonalInformation />}
+          {signUpSection === 0 && <SignUpStart onNext={handleNextSection} />}
+          {signUpSection === 1 && <SignUpPersonalInformation />}
         </div>
       </article>
 
