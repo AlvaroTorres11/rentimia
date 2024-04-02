@@ -4,16 +4,10 @@ import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { Link } from "react-router-dom";
 import HERO from "../../../assets/auth/Signin.jpg";
-import { useState } from "react";
+import { useThemeToogle } from "../../../hooks/useThemeToogle";
 
 function SignIn() {
-  const [darkTheme, setDarkTheme] = useState(true);
-  const handleChangeTheme = () => {
-    setDarkTheme(!darkTheme);
-    console.log(darkTheme);
-    const theme = darkTheme ? "winter" : "sunset";
-    document.documentElement.setAttribute("data-theme", theme);
-  };
+  const { handleChangeTheme } = useThemeToogle();
 
   return (
     <section className="min-h-screen flex">
