@@ -106,7 +106,7 @@ function SignIn() {
 
                 <p className="font-principal-light">
                   ¿Aún no tienes una cuenta?{" "}
-                  <Link>
+                  <Link to="/registro">
                     <u>
                       <span className="font-principal-semibold">
                         Crea una aquí
