@@ -6,6 +6,8 @@ import { Link } from "react-router-dom";
 import HERO from "../../../assets/auth/Signin.jpg";
 import { useState } from "react";
 import { useThemeToogle } from "../../../hooks/useThemeToogle";
+import AvatarUploader from "../../../common/AvatarUploader";
+("../../../common/AvatarUploader");
 
 export function SignUpStart({ onNext }) {
   return (
@@ -84,6 +86,9 @@ export function SignUpPersonalInformation({ onNext }) {
 
   const minDate = new Date();
   minDate.setFullYear(minDate.getFullYear() - 90);
+
+  const [userAvatar, setUserAvatar] = useState(null);
+
   return (
     <>
       <Formik
@@ -112,6 +117,8 @@ export function SignUpPersonalInformation({ onNext }) {
         })}
         onSubmit={(values, { setSubmitting }) => {
           setTimeout(() => {
+            alert(JSON.stringify(values, null, 2));
+            alert(userAvatar);
             onNext(2);
             setSubmitting(false);
           }, 400);
@@ -143,6 +150,16 @@ export function SignUpPersonalInformation({ onNext }) {
             type="date"
             placeholder="dd/mm/aaaa"
           />
+
+          <div className="text-start flex flex-col gap-0.5">
+            <label className="text-sm font-principal-medium quaternaryColor">
+              Foto de perfil
+            </label>
+            <AvatarUploader
+              userAvatar={userAvatar}
+              setUserAvatar={setUserAvatar}
+            ></AvatarUploader>
+          </div>
 
           <button className="btn primary-color-300 w-full" type="submit">
             <span className="font-principal-semibold secondary-text-color">
@@ -224,20 +241,18 @@ export function SignUpLocation() {
           placeholder="Calle 25 de abril"
         />
 
-        <div className="flex gap-5">
-          <InputField
-            label="Núm. Exterior"
-            name="numExt"
-            type="text"
-            placeholder="1"
-          />
-          <InputField
-            label="Num. Interior (opcional)"
-            name="numInt"
-            type="text"
-            placeholder="S/N"
-          />
-        </div>
+        <InputField
+          label="Núm. Exterior"
+          name="numExt"
+          type="text"
+          placeholder="1"
+        />
+        <InputField
+          label="Num. Interior (opcional)"
+          name="numInt"
+          type="text"
+          placeholder="S/N"
+        />
 
         <div className="flex flex-col gap-5">
           <button className="btn primary-color-300 w-full" type="submit">
@@ -306,7 +321,10 @@ export default function SignUp() {
           </div>
 
           {signUpSection === 0 && <SignUpStart onNext={handleNextSection} />}
-          {signUpSection === 1 && <SignUpPersonalInformation />}
+          {signUpSection === 1 && (
+            <SignUpPersonalInformation onNext={handleNextSection} />
+          )}
+          {signUpSection === 2 && <SignUpLocation />}
         </div>
       </article>
 
