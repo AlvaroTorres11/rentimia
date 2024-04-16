@@ -56,3 +56,29 @@ export function InputField({ label, ...props }) {
     </div>
   );
 }
+
+export function SelectField({ label, ...props }) {
+  const [field, meta] = useField(props);
+  return (
+    <div className="flex flex-col text-start">
+      <label
+        className="text-sm font-principal-medium quaternaryColor"
+        htmlFor={props.id || props.name}
+      >
+        {label}
+      </label>
+      <select
+        className="select select-bordered w-full max-w-xs"
+        {...field}
+        {...props}
+      >
+        {props.children}
+      </select>
+      {meta.touched && meta.error ? (
+        <span className="text-red-500 text-xs font-principal-light">
+          {meta.error}
+        </span>
+      ) : null}
+    </div>
+  );
+}
