@@ -5,7 +5,7 @@ import {
 } from "../../../utils/localStorageManagement";
 
 export function useSignUpSection() {
-  const [sectionSignUp, setSectionSignUp] = useState(null);
+  const [sectionSignUp, setSectionSignUp] = useState(0);
 
   const handleNextSection = (nextSection) => {
     setSectionSignUp(nextSection);
@@ -18,10 +18,10 @@ export function useSignUpSection() {
 
   useEffect(() => {
     const sectionSignUp = handleGetDataFromLocalStorage("sectionSignUp");
-
-    if (sectionSignUp) setSectionSignUp(Number(sectionSignUp));
+    //* Restamos para que el usuario vuelva a donde se quedó
+    if (sectionSignUp) setSectionSignUp(Number(sectionSignUp) - 1);
     else setSectionSignUp(0);
-  }, [sectionSignUp]);
+  }, []);
 
   return {
     sectionSignUp,
