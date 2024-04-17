@@ -4,7 +4,7 @@ import { useThemeToogle } from "../../../hooks/useThemeToogle";
 import { useSignUpSection } from "./useSignUpSection";
 import SignUpCredentials from "./sections/SignUpCredentials";
 import SignUpPersonalInformation from "./sections/SignUpPersonalInformation";
-import SignUpUserLocation from "./sections/SignUpUserLocation";
+import SignUpUserLocation from "./sections/signup-user-location/SignUpUserLocation";
 
 export default function SignUp() {
   const { handleChangeTheme } = useThemeToogle();
@@ -66,15 +66,22 @@ export default function SignUp() {
             <SignUpCredentials
               onNext={handleNextSection}
               saveDataInLocalStorage={handleSaveDataInLocalStorage}
+              getDataFromLocalStorage={handleGetDataFromLocalStorage}
             />
           )}
           {sectionSignUp === 1 && (
             <SignUpPersonalInformation
               onNext={handleNextSection}
               saveDataInLocalStorage={handleSaveDataInLocalStorage}
+              getDataFromLocalStorage={handleGetDataFromLocalStorage}
             />
           )}
-          {sectionSignUp === 2 && <SignUpUserLocation />}
+          {sectionSignUp === 2 && (
+            <SignUpUserLocation
+              saveDataInLocalStorage={handleSaveDataInLocalStorage}
+              getDataFromLocalStorage={handleGetDataFromLocalStorage}
+            />
+          )}
         </div>
       </article>
 
